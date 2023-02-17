@@ -44,7 +44,7 @@ const TARGET_SHOP_NAME = "expondo.de";
     const googleSERP = await browser.newPage();
 
     await googleSERP.goto(
-      "https://www.google.com/search?q=schwei%C3%9Ftisch&glp=1&adtest=on&safe=images&safe=high"
+      "https://www.google.com/search?q=popcornmaschine&glp=1&adtest=on&safe=images&safe=high"
     );
 
     await googleSERP.evaluate(() => {
@@ -97,7 +97,7 @@ const TARGET_SHOP_NAME = "expondo.de";
         shoppingAdsFound += result;
       }
       console.log(
-        "Loop finished. Number of shopping ads found: ",
+        "Search finished. Number of shopping ads found: ",
         shoppingAdsFound
       );
     } else {
@@ -132,8 +132,45 @@ const TARGET_SHOP_NAME = "expondo.de";
         searchAdsFound += result;
       }
       console.log(
-        "Loop finished. Number of search ads found: ",
+        "Search finished. Number of search ads found: ",
         searchAdsFound
+      );
+    } else {
+      console.log("No search ads found!");
+    }
+
+    const organicResults = await googleSERP.$$(
+      "#rso > div > div > div:not(.EyBRub, .Wt5Tfe, .uVMCKf)"
+    );
+
+    if (organicResults) {
+      let organicResultsFound = 0;
+
+      for (const ad of organicResults) {
+        const result = await googleSERP.evaluate(
+          (targetShopName, ad) => {
+            const shopURL = ad.querySelector(
+              "#rso div > a > div > cite"
+            )?.textContent;
+
+            console.log("Current organic result's URL: ", shopURL);
+
+            if (shopURL?.includes(targetShopName)) {
+              ad.style = "border: 3px solid red;";
+              return 1;
+            } else {
+              return 0;
+            }
+          },
+          TARGET_SHOP_NAME,
+          ad
+        );
+
+        organicResultsFound += result;
+      }
+      console.log(
+        "Search finished. Number of organic search results found: ",
+        organicResultsFound
       );
     } else {
       console.log("No search ads found!");

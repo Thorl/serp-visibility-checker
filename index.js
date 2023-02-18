@@ -3,6 +3,13 @@ const fs = require("fs");
 const path = require("path");
 
 const checkSerpVisibility = require("./checkSerpVisibility");
+const markShoppingAds = require("./handlers/markShoppingAds");
+const markSearchAds = require("./handlers/markSearchAds");
+const markOrganicSearchResults = require("./handlers/markOrganicSearchResults");
+const removeGooglePopup = require("./handlers/removeGooglePopup");
+const takeScreenshot = require("./handlers/takeScreenshot");
+const clearInputFields = require("./handlers/clearInputFields");
+const makeKeywordSearch = require("./handlers/makeKeywordSearch");
 
 const TARGET_COUNTRY = "Germany";
 const TARGET_LANGUAGE = "German";
@@ -13,10 +20,13 @@ const TARGET_SHOP_NAME = "expondo.de";
   try {
     const browser = await puppeteer.launch({
       headless: false,
+      // args: ["--start-maximized"],
       defaultViewport: false,
     });
 
     const isearchfromPage = await browser.newPage();
+
+    isearchfromPage.setViewport({ width: 0, height: 0 });
 
     await isearchfromPage.goto("http://isearchfrom.com/");
 

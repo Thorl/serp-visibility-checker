@@ -1,7 +1,7 @@
 const markSearchAds = async (page, targetShopName) => {
   const searchAds = await page.$$(".uEierd");
 
-  if (searchAds) {
+  if (searchAds.length > 0) {
     let searchAdsFound = 0;
 
     for (const ad of searchAds) {

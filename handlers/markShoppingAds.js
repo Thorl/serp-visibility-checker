@@ -1,7 +1,7 @@
 const markShoppingAds = async (page, targetShopName) => {
   const shoppingAds = await page.$$(".pla-unit-container");
 
-  if (shoppingAds) {
+  if (shoppingAds.length > 0) {
     let shoppingAdsFound = 0;
 
     for (const ad of shoppingAds) {

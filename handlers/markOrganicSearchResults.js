@@ -3,7 +3,7 @@ const markOrganicSearchResults = async (page, targetShopName) => {
     "#rso > div > div > div:not(.EyBRub, .Wt5Tfe, .uVMCKf)"
   );
 
-  if (organicResults) {
+  if (organicResults.length > 0) {
     let organicResultsFound = 0;
 
     for (const ad of organicResults) {
@@ -33,7 +33,7 @@ const markOrganicSearchResults = async (page, targetShopName) => {
       organicResultsFound
     );
   } else {
-    console.log("No search ads found!");
+    console.log("No organic search results found!");
   }
 };
 

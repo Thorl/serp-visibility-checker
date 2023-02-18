@@ -1,5 +1,3 @@
-require("puppeteer");
-
 const markShoppingAds = require("./handlers/markShoppingAds");
 const markSearchAds = require("./handlers/markSearchAds");
 const markOrganicSearchResults = require("./handlers/markOrganicSearchResults");
@@ -26,8 +24,6 @@ const checkSerpVisibility = async (
       targetLanguage
     );
 
-    await isearchfromPage.waitForNavigation({ waitUntil: "load" });
-
     const pageTarget = await isearchfromPage.target();
 
     const newTarget = await browser.waitForTarget(
@@ -36,7 +32,9 @@ const checkSerpVisibility = async (
 
     const googleSERP = await newTarget.page();
 
-    await googleSERP.waitForSelector("#CXQnmb > div > div");
+    await googleSERP.setViewport({ width: 0, height: 0 });
+
+    await googleSERP.waitForSelector("#search");
 
     //@Comment: Above code commented out for testing purposes.
 
@@ -46,17 +44,19 @@ const checkSerpVisibility = async (
     "https://www.google.com/search?q=popcornmaschine&glp=1&adtest=on&safe=images&safe=high"
   ); */
 
-    removeGooglePopup(googleSERP);
+    await removeGooglePopup(googleSERP);
 
-    markShoppingAds(googleSERP, targetShopName);
+    await markShoppingAds(googleSERP, targetShopName);
 
-    markSearchAds(googleSERP, targetShopName);
+    await markSearchAds(googleSERP, targetShopName);
 
-    markOrganicSearchResults(googleSERP, targetShopName);
+    await markOrganicSearchResults(googleSERP, targetShopName);
 
-    // takeScreenshot(googleSERP, targetShopName, searchQuery);
+    await takeScreenshot(googleSERP, targetShopName, searchQuery);
 
-    // await googleSERP.close();
+    await googleSERP.waitForTimeout(2000);
+
+    await googleSERP.close();
   } catch (error) {
     console.log("An error occured while checking SERP visibility: ", error);
   }

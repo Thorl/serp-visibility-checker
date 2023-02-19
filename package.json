@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
+    "nodemailer": "^6.9.1",
     "puppeteer": "^19.7.0"
   }
 }

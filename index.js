@@ -1,15 +1,10 @@
 const puppeteer = require("puppeteer");
+require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
 const checkSerpVisibility = require("./checkSerpVisibility");
-const markShoppingAds = require("./handlers/markShoppingAds");
-const markSearchAds = require("./handlers/markSearchAds");
-const markOrganicSearchResults = require("./handlers/markOrganicSearchResults");
-const removeGooglePopup = require("./handlers/removeGooglePopup");
-const takeScreenshot = require("./handlers/takeScreenshot");
-const clearInputFields = require("./handlers/clearInputFields");
-const makeKeywordSearch = require("./handlers/makeKeywordSearch");
+const sendEmail = require("./handlers/sendEmail");
 
 const TARGET_COUNTRY = "Germany";
 const TARGET_LANGUAGE = "German";
@@ -30,7 +25,7 @@ const TARGET_SHOP_NAME = "expondo.de";
 
     await isearchfromPage.goto("http://isearchfrom.com/");
 
-    checkSerpVisibility(
+    await checkSerpVisibility(
       browser,
       isearchfromPage,
       TARGET_COUNTRY,
@@ -38,6 +33,8 @@ const TARGET_SHOP_NAME = "expondo.de";
       TARGET_SHOP_NAME,
       SEARCH_QUERY
     );
+
+    await sendEmail("thorslof@hotmail.com", "expondo.de");
 
     /*  const screenshotDirectory = `screenshots/${TARGET_SHOP_NAME}`;
  

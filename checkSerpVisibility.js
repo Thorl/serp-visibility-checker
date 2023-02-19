@@ -36,14 +36,6 @@ const checkSerpVisibility = async (
 
     await googleSERP.waitForSelector("#search");
 
-    //@Comment: Above code commented out for testing purposes.
-
-    // const googleSERP = await browser.newPage();
-
-    /*   await googleSERP.goto(
-    "https://www.google.com/search?q=popcornmaschine&glp=1&adtest=on&safe=images&safe=high"
-  ); */
-
     await removeGooglePopup(googleSERP);
 
     await markShoppingAds(googleSERP, targetShopName);
@@ -53,8 +45,6 @@ const checkSerpVisibility = async (
     await markOrganicSearchResults(googleSERP, targetShopName);
 
     await takeScreenshot(googleSERP, targetShopName, searchQuery);
-
-    await googleSERP.waitForTimeout(2000);
 
     await googleSERP.close();
   } catch (error) {

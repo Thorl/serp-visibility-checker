@@ -5,6 +5,7 @@ const removeGooglePopup = require("./handlers/removeGooglePopup");
 const takeScreenshot = require("./handlers/takeScreenshot");
 const clearInputFields = require("./handlers/clearInputFields");
 const makeKeywordSearch = require("./handlers/makeKeywordSearch");
+const switchToNewTab = require("./handlers/switchToNewTab");
 
 const checkSerpVisibility = async (
   browser,
@@ -15,22 +16,18 @@ const checkSerpVisibility = async (
   searchQuery
 ) => {
   try {
-    clearInputFields(isearchfromPage);
+    await clearInputFields(isearchfromPage);
 
-    makeKeywordSearch(
+    await makeKeywordSearch(
       isearchfromPage,
       searchQuery,
       targetCountry,
       targetLanguage
     );
 
-    const pageTarget = await isearchfromPage.target();
+    console.log(`***Starting search for ${searchQuery}***`);
 
-    const newTarget = await browser.waitForTarget(
-      (target) => target.opener() === pageTarget
-    );
-
-    const googleSERP = await newTarget.page();
+    const googleSERP = await switchToNewTab(browser, isearchfromPage);
 
     await googleSERP.setViewport({ width: 0, height: 0 });
 
@@ -45,6 +42,8 @@ const checkSerpVisibility = async (
     await markOrganicSearchResults(googleSERP, targetShopName);
 
     await takeScreenshot(googleSERP, targetShopName, searchQuery);
+
+    console.log(`***Ending search for ${searchQuery}***`);
 
     await googleSERP.close();
   } catch (error) {

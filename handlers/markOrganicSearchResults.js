@@ -13,8 +13,6 @@ const markOrganicSearchResults = async (page, targetShopName) => {
             "#rso div > a > div > cite"
           )?.textContent;
 
-          console.log("Current organic result's URL: ", shopURL);
-
           if (shopURL?.includes(targetShopName)) {
             ad.style = "border: 3px solid red;";
             return 1;

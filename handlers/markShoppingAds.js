@@ -8,10 +8,8 @@ const markShoppingAds = async (page, targetShopName) => {
       const result = await page.evaluate(
         (targetShopName, ad) => {
           const shopName = ad.querySelector(
-            "div.orXoSd > div.rwVHAc.itPOE > div.LbUacb > span"
+            "div.orXoSd > div.rwVHAc > div.LbUacb > span"
           )?.textContent;
-
-          console.log("Current shopping ad's shop name: ", shopName);
 
           if (shopName === targetShopName) {
             ad.style = "border: 3px solid red;";

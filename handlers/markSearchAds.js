@@ -11,8 +11,6 @@ const markSearchAds = async (page, targetShopName) => {
             .querySelector("div.v5yQqb > a")
             ?.getAttribute("data-pcu");
 
-          console.log("Current search ad's shop name: ", shopName);
-
           if (shopName?.includes(targetShopName)) {
             ad.style = "border: 3px solid red;";
             return 1;

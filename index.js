@@ -8,7 +8,14 @@ const sendEmail = require("./handlers/sendEmail");
 
 const TARGET_COUNTRY = "Germany";
 const TARGET_LANGUAGE = "German";
-const SEARCH_QUERY = "popcornmaschine";
+const SEARCH_QUERIES = [
+  "kontrollwaage",
+  "popcornmaschine",
+  "elektroheizer",
+  "dieselpumpe",
+  "ozongenerator",
+  "brutapparat",
+];
 const TARGET_SHOP_NAME = "expondo.de";
 
 (async () => {
@@ -25,16 +32,40 @@ const TARGET_SHOP_NAME = "expondo.de";
 
     await isearchfromPage.goto("http://isearchfrom.com/");
 
-    await checkSerpVisibility(
-      browser,
-      isearchfromPage,
-      TARGET_COUNTRY,
-      TARGET_LANGUAGE,
-      TARGET_SHOP_NAME,
-      SEARCH_QUERY
-    );
+    const de = {
+      country: TARGET_COUNTRY,
+      language: TARGET_LANGUAGE,
+      shopName: TARGET_SHOP_NAME,
+      searchQueries: SEARCH_QUERIES,
+    };
 
-    await sendEmail("thorslof@hotmail.com", "expondo.de");
+    const requestedVisibilityChecks = [de];
+
+    for (let i = 0; i < requestedVisibilityChecks.length; i++) {
+      const country = requestedVisibilityChecks[i].country;
+      const language = requestedVisibilityChecks[i].language;
+      const shopName = requestedVisibilityChecks[i].shopName;
+
+      const numberOfSearchQueries =
+        requestedVisibilityChecks[i].searchQueries.length;
+
+      for (let j = 0; j < numberOfSearchQueries; j++) {
+        const seachQuery = requestedVisibilityChecks[i].searchQueries[j];
+        await checkSerpVisibility(
+          browser,
+          isearchfromPage,
+          country,
+          language,
+          shopName,
+          seachQuery
+        );
+      }
+
+      if (i === requestedVisibilityChecks.length - 1) {
+        console.log("Visibility check finished. Sending email...");
+        await sendEmail("thorslof@hotmail.com", "expondo.de");
+      }
+    }
 
     /*  const screenshotDirectory = `screenshots/${TARGET_SHOP_NAME}`;
  

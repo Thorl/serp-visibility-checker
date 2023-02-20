@@ -14,12 +14,8 @@ const removeGooglePopup = async (page) => {
       ".commercial-unit-desktop-top"
     );
 
-    console.log("Shopping carousel: ", shoppingCarousel);
-
     if (shoppingCarousel) {
       const viewportWidth = window.innerWidth;
-
-      console.log("viewport width: ", viewportWidth);
 
       shoppingCarousel.style = `width: ${viewportWidth}px`;
     }

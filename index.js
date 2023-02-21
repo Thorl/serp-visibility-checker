@@ -64,16 +64,18 @@ const TARGET_SHOP_NAME = "expondo.de";
       if (i === requestedVisibilityChecks.length - 1) {
         console.log("Visibility check finished. Sending email...");
         await sendEmail("thorslof@hotmail.com", "expondo.de");
+
+        const screenshotDirectory = `screenshots/${TARGET_SHOP_NAME}`;
+
+        const files = fs.readdirSync(screenshotDirectory);
+
+        for (const file of files) {
+          fs.unlinkSync(path.join(screenshotDirectory, file));
+        }
+
+        console.log(`Screenshots for ${TARGET_SHOP_NAME} deleted!`);
       }
     }
-
-    /*  const screenshotDirectory = `screenshots/${TARGET_SHOP_NAME}`;
- 
-    const files = fs.readdirSync(screenshotDirectory);
-
-      for (const file of files) {
-        fs.unlinkSync(path.join(screenshotDirectory, file));
-      } */
   } catch (error) {
     console.log("An error occurred while running index.js: ", error);
   }

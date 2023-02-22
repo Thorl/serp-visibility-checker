@@ -1,13 +1,17 @@
 const clearInputFields = async (page) => {
-  await page.evaluate((countryInput, languageInput, searchQueryInput) => {
-    const countryInputEl = document.querySelector("#countrytags");
-    const languageInputEl = document.querySelector("#languagetags");
-    const searchQueryInputEl = document.querySelector("#searchinput");
+  try {
+    await page.evaluate(() => {
+      const countryInputEl = document.querySelector("#countrytags");
+      const languageInputEl = document.querySelector("#languagetags");
+      const searchQueryInputEl = document.querySelector("#searchinput");
 
-    countryInputEl.value = "";
-    languageInputEl.value = "";
-    searchQueryInputEl.value = "";
-  });
+      countryInputEl.value = "";
+      languageInputEl.value = "";
+      searchQueryInputEl.value = "";
+    });
+  } catch (error) {
+    console.log("An error occurred while clearing input fields: ", error);
+  }
 };
 
 module.exports = clearInputFields;

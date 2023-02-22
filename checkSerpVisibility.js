@@ -33,6 +33,8 @@ const checkSerpVisibility = async (
 
     await googleSERP.waitForSelector("#search");
 
+    await googleSERP.waitForTimeout(1000);
+
     await removeGooglePopup(googleSERP);
 
     await markShoppingAds(googleSERP, targetShopName);

@@ -4,13 +4,20 @@ const makeKeywordSearch = async (
   targetCountry,
   targetLanguage
 ) => {
-  await page.type("#countrytags", targetCountry);
-  await page.type("#languagetags", targetLanguage);
-  await page.type("#searchinput", searchQuery);
+  try {
+    await page.type("#countrytags", targetCountry);
+    await page.type("#languagetags", targetLanguage);
+    await page.type("#searchinput", searchQuery);
 
-  const searchButton = "#searchbutton";
+    const searchButton = "#searchbutton";
 
-  await page.click(searchButton);
+    await page.click(searchButton);
+  } catch (error) {
+    console.log(
+      `An error occured while making a keyword search for ${searchQuery}:`,
+      error
+    );
+  }
 };
 
 module.exports = makeKeywordSearch;

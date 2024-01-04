@@ -20,6 +20,16 @@ export default function SearchForm() {
   const handleSubmitSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Create function that switches the page to /visibility-results, but at first
+    // only shows a loading icon. Meanwhile, the BrightData API should be called.
+    // Once the API call is returned, the loading icon should stop showing, and
+    // instead show the page with the returned data.
+
+    // Possible solution: Pass data in search params of URL. See Trello notes.
+
+    // After some consideration the best solution is probably to store the data
+    // in a global state using useContext and then accessing it in /visibility-results
+
     router.push("/visibility-results");
   };
 
@@ -73,8 +83,9 @@ export default function SearchForm() {
         name="keyword3"
         type="text"
       /> */}
-
-      <button className={styles.searchForm__button}>Check Visibility</button>
+      <Link href={"/visibility-results"}>
+        <button className={styles.searchForm__button}>Check Visibility</button>
+      </Link>
     </form>
   );
 }

@@ -1,0 +1,11 @@
+.textResultsList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+
+  text-align: center;
+  border-bottom: 1px solid black;
+}

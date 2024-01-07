@@ -9,7 +9,7 @@ interface ShoppingResultProps {
   rank: number;
 }
 
-export default function ShoppingResult(props: ShoppingResultProps) {
+export function ShoppingResult(props: ShoppingResultProps) {
   return (
     <>
       <Image

@@ -1,4 +1,4 @@
-import ShoppingResult from "../ShoppingResult/ShoppingResult";
+import { ShoppingResult } from "../ShoppingResult/ShoppingResult";
 
 import styles from "./ShoppingResultsList.module.css";
 
@@ -21,7 +21,7 @@ export const ShoppingResultsList = () => {
   return (
     <div className={styles.shoppingResultsList}>
       <h4>Image</h4>
-      <h4>Product name</h4>
+      <h4>Name</h4>
       <h4>URL</h4>
       <h4>Position</h4>
       {shoppingResultMock.map((result) => {

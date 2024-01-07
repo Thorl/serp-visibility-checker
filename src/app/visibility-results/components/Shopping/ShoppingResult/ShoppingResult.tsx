@@ -9,13 +9,9 @@ interface ShoppingResultProps {
   rank: number;
 }
 
-export default function ShoppingResult(props: ShoppingResultProps) {
+export function ShoppingResult(props: ShoppingResultProps) {
   return (
-    <section className={styles.result}>
-      <h4>Image</h4>
-      <h4>Product name</h4>
-      <h4>URL</h4>
-      <h4>Position</h4>
+    <>
       <Image
         width={100}
         height={100}
@@ -27,6 +23,6 @@ export default function ShoppingResult(props: ShoppingResultProps) {
         Go to the shop
       </a>
       <p>{props.rank}</p>
-    </section>
+    </>
   );
 }

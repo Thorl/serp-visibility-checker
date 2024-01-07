@@ -4,3 +4,10 @@
   align-items: center;
   height: 100vh;
 }
+
+.visibilityResults__title {
+  margin: 10px 0;
+
+  font-size: 22px;
+  text-align: center;
+}
